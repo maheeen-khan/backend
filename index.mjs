@@ -128,6 +128,9 @@ const allBooks = [
 
 app.use(cors())
 
+app.get('/', (req, res) => {
+  res.send('Server is running!')
+})
 app.get('/books/:book', (req, res) => {
   res.send(allBooks)
   const selectedBook = req.params.book
