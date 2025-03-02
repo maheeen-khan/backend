@@ -171,7 +171,7 @@ app.get('/books/:book', (req, res) => {
 
 // POST Request
 app.post('/addbook', (req, res) => {
-  allBooks.push({ id: allBooks.length + 1, ...req.body })
+  allBooks.unshift({ id: allBooks.length + 1, ...req.body })
   res.send("User added successfully!")
 })
 
