@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 4000
 
 const allBooks = [
   {
@@ -163,11 +163,23 @@ app.get('/', (req, res) => {
 app.get('/books', (req, res) => {
   res.send(allBooks)
 })
+
+
 app.get('/books/:book', (req, res) => {
-  res.send(allBooks)
-  const selectedBook = req.params.book
-  console.log(selectedBook)
-})
+  const selectedBook = req.params.book;
+  
+  // Find books that match the search term
+  const matchingBooks = allBooks.filter(book => 
+    book.book_name.toLowerCase().includes(selectedBook.toLowerCase())
+  );
+
+  if (matchingBooks.length > 0) {
+    res.json(matchingBooks);  // ✅ Send an array of books
+  } else {
+    res.status(404).json({ message: "Book not found" });
+  }
+});
+
 
 // POST Request
 app.post('/addbook', (req, res) => {
